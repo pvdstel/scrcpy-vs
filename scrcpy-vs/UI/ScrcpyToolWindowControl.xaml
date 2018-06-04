@@ -7,44 +7,60 @@
     xmlns:model="clr-namespace:scrcpy.VisualStudio.Model"
     xmlns:ui="clr-namespace:scrcpy.VisualStudio.UI"
     xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
-    Name="MyToolWindow"
     d:DesignHeight="300"
     d:DesignWidth="300"
     Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBackgroundKey}}"
     Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTextKey}}"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="1" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Border
-            Padding="10"
-            BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBorderKey}}"
-            BorderThickness="0,0,0,1">
-            <WrapPanel Orientation="Horizontal">
-                <ComboBox ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type model:Device}">
-                            <TextBlock Text="{Binding Description}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button
-                    Margin="10,0,0,0"
-                    Padding="5,0"
-                    Command="{Binding StartScrcpyCommand}"
-                    CommandParameter="{Binding SelectedDevice}"
-                    Content="▶" />
-                <Button
-                    Margin="10,0,0,0"
-                    Padding="5,0"
-                    Content="■" />
-            </WrapPanel>
-        </Border>
-        <ContentControl Grid.Row="1" />
+        <WrapPanel Margin="10" Orientation="Horizontal">
+            <ComboBox ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type model:Device}">
+                        <TextBlock Text="{Binding Description}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button
+                Margin="10,0,0,0"
+                Padding="5,0"
+                Command="{Binding StartScrcpyCommand}"
+                CommandParameter="{Binding SelectedDevice}"
+                Content="▶"
+                ToolTip="Start scrcpy for the selected device" />
+            <Button
+                Margin="10,0,0,0"
+                Padding="5,0"
+                Command="{Binding RefreshDevicesCommand}"
+                Content="↺"
+                FontSize="14"
+                ToolTip="Refresh devices" />
+            <Button
+                Margin="10,0,0,0"
+                Padding="5,0"
+                Command="{Binding StopScrcpyCommand}"
+                Content="■"
+                ToolTip="Stop scrcpy" />
+        </WrapPanel>
+        <ProgressBar
+            Height="5"
+            VerticalAlignment="Bottom"
+            Background="{x:Null}"
+            BorderBrush="{x:Null}"
+            IsIndeterminate="True"
+            Visibility="{Binding IsGettingDevices, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <Rectangle Grid.Row="1" Fill="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBorderKey}}" />
         <TabControl
-            Grid.Row="1"
+            x:Name="pageControl"
+            Grid.Row="2"
             Background="{x:Null}"
             BorderBrush="{x:Null}"
             SelectedIndex="0">
@@ -58,17 +74,17 @@
                     TextWrapping="Wrap" />
             </TabItem>
             <TabItem Visibility="Collapsed">
-                <TextBlock
-                    Margin="25"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="scrcpy has exited."
-                    TextAlignment="Center"
-                    TextWrapping="Wrap" />
-            </TabItem>
-            <TabItem Visibility="Collapsed">
                 <ui:WindowHost x:Name="windowHost" />
             </TabItem>
         </TabControl>
+        <ProgressBar
+            x:Name="scrcpyStarting"
+            Grid.Row="2"
+            Height="5"
+            VerticalAlignment="Bottom"
+            Background="{x:Null}"
+            BorderBrush="{x:Null}"
+            IsIndeterminate="True"
+            Visibility="Collapsed" />
     </Grid>
 </UserControl>

@@ -31,7 +31,6 @@ namespace scrcpy.VisualStudio.UI
             InitializeComponent();
 
             SizeChanged += (s, e) => PositionWindow();
-            Unloaded += (s, e) => CleanUp();
         }
 
         public void CleanUp()
@@ -42,13 +41,16 @@ namespace scrcpy.VisualStudio.UI
             _process = null;
         }
 
-        public void StartProcess(ProcessStartInfo info)
+        public async Task<Task> StartProcess(ProcessStartInfo info)
         {
             CleanUp();
 
             _process = Process.Start(info);
-            _process.WaitForInputIdle();
+            await Task.Run(() => _process.WaitForInputIdle());
+
             StealWindow();
+
+            return Task.Run(() => _process.WaitForExit());
         }
 
         private void StealWindow()
@@ -58,8 +60,7 @@ namespace scrcpy.VisualStudio.UI
             _host.Focus();
 
             Methods.SetParent(_process.MainWindowHandle, _host.Handle);
-            //Native.SetWindowLongPtr(new HandleRef(null, _process.MainWindowHandle), Constants.GWL_HWNDPARENT, _host.Handle);
-            Methods.SetWindowLongPtr(new HandleRef(null, _process.MainWindowHandle), Constants.GWL_STYLE, new IntPtr(Constants.WS_VISIBLE | Constants.WS_CHILD));
+            Methods.SetWindowLongPtr(new HandleRef(null, _process.MainWindowHandle), Constants.GWL_STYLE, new IntPtr(Constants.WS_VISIBLE));
 
             PositionWindow();
             wfh.Focus();
@@ -72,6 +73,8 @@ namespace scrcpy.VisualStudio.UI
 
             Methods.MoveWindow(_process.MainWindowHandle, 0, 0, (int)ActualWidth, (int)ActualHeight, true);
         }
+
+        public event EventHandler ProcessExited;
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

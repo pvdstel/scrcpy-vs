@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +9,11 @@ namespace scrcpy.VisualStudio.Model
 {
     public class ScrcpyEventArgs : EventArgs
     {
-        public ScrcpyEventArgs(Device device)
+        public ScrcpyEventArgs(ProcessStartInfo processStartInfo)
         {
-            Device = device;
+            ProcessStartInfo = processStartInfo;
         }
 
-        public Device Device { get; set; }
+        public ProcessStartInfo ProcessStartInfo { get; set; }
     }
 }

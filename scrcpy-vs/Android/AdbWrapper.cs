@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace scrcpy.VisualStudio.Android
 {
-    public static class Adb
+    public static class AdbWrapper
     {
         public static async Task<List<string>> GetAuthorizedDevices()
         {
@@ -33,6 +33,20 @@ namespace scrcpy.VisualStudio.Android
         {
             string output = await GetAdbOutput($"-s {device} shell getprop ro.product.model");
             return output.Trim();
+        }
+
+        public static void KillServer()
+        {
+            ProcessStartInfo psi = new ProcessStartInfo()
+            {
+                WorkingDirectory = Paths.ScrcpyPath,
+                FileName = Paths.AdbName,
+                Arguments = "kill-server",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+
+            Process adb = Process.Start(psi);
         }
 
         private static Task<string> GetAdbOutput(string arguments)

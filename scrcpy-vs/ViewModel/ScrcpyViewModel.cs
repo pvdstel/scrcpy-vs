@@ -16,8 +16,7 @@ namespace scrcpy.VisualStudio.ViewModel
     {
         private ObservableCollection<Device> _devices;
         private Device _selectedDevice;
-
-        private RelayCommand<Device> _startScrcpyCommand;
+        private bool _isGettingDevices;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -25,7 +24,9 @@ namespace scrcpy.VisualStudio.ViewModel
         public ScrcpyViewModel()
         {
             GetDevices();
-            _startScrcpyCommand = new RelayCommand<Device>(StartScrcpy);
+            StartScrcpyCommand = new RelayCommand<Device>(StartScrcpy);
+            StopScrcpyCommand = new RelayCommand(StopScrcpy);
+            RefreshDevicesCommand = new RelayCommand(GetDevices);
         }
 
         /// <summary>
@@ -55,22 +56,47 @@ namespace scrcpy.VisualStudio.ViewModel
         }
 
         /// <summary>
+        /// Gets whether the list of devices is being refreshed.
+        /// </summary>
+        public bool IsGettingDevices
+        {
+            get => _isGettingDevices;
+            private set
+            {
+                _isGettingDevices = value;
+                RaisePropertyChanged(nameof(IsGettingDevices));
+            }
+        }
+
+        /// <summary>
         /// Gets the command used to call <see cref="StartScrcpy(Device)"/>.
         /// </summary>
-        public RelayCommand<Device> StartScrcpyCommand => _startScrcpyCommand;
+        public RelayCommand<Device> StartScrcpyCommand { get; }
+
+        /// <summary>
+        /// Gets the command used to call <see cref="StartScrcpy(Device)"/>.
+        /// </summary>
+        public RelayCommand StopScrcpyCommand { get; }
+
+        /// <summary>
+        /// Gets the command used to call <see cref="GetDevices"/>.
+        /// </summary>
+        public RelayCommand RefreshDevicesCommand { get; }
 
         /// <summary>
         /// Gets the connected Android devices.
         /// </summary>
         public async void GetDevices()
         {
-            var devicesTasks = (await Adb.GetAuthorizedDevices())
-                .Select(async s => new Device(s, $"{await Adb.GetDeviceManufacturer(s)} {await Adb.GetDeviceModel(s)}"))
+            IsGettingDevices = true;
+            var devicesTasks = (await AdbWrapper.GetAuthorizedDevices())
+                .Select(async s => new Device(s, $"{await AdbWrapper.GetDeviceManufacturer(s)} {await AdbWrapper.GetDeviceModel(s)}"))
                 .ToList();
             await Task.WhenAll(devicesTasks);
 
             Devices = new ObservableCollection<Device>(devicesTasks.Select(t => t.Result));
             if (Devices.Count > 0) SelectedDevice = Devices.First();
+            IsGettingDevices = false;
         }
 
         /// <summary>
@@ -79,10 +105,19 @@ namespace scrcpy.VisualStudio.ViewModel
         /// <param name="device">The device to connect to.</param>
         public void StartScrcpy(Device device)
         {
-            ScrcpyStartRequested?.Invoke(this, new ScrcpyEventArgs(device));
+            ScrcpyStartRequested?.Invoke(this, new ScrcpyEventArgs(ScrcpyWrapper.GetStartInfo(device.ID)));
+        }
+
+        /// <summary>
+        /// Sends the UI a message to stop scrcpy.
+        /// </summary>
+        /// <param name="device">The device to connect to.</param>
+        public void StopScrcpy()
+        {
+            ScrcpyStopRequested?.Invoke(this, new EventArgs());
         }
 
         public event EventHandler<ScrcpyEventArgs> ScrcpyStartRequested;
-        public event EventHandler<ScrcpyEventArgs> ScrcpyStopRequested;
+        public event EventHandler ScrcpyStopRequested;
     }
 }
