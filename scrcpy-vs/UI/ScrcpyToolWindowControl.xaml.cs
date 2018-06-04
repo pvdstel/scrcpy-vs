@@ -15,7 +15,7 @@
     /// <summary>
     /// Interaction logic for ScrcpyToolWindowControl.
     /// </summary>
-    public partial class ScrcpyToolWindowControl : UserControl, IDisposable
+    public partial class ScrcpyToolWindowControl : UserControl
     {
         private SemaphoreSlim _pageSemaphore = new SemaphoreSlim(1, 1);
 
@@ -46,32 +46,5 @@
             pageControl.SelectedIndex = 0;
             _pageSemaphore.Release();
         }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                }
-                AdbWrapper.KillServer();
-                disposedValue = true;
-            }
-        }
-
-        ~ScrcpyToolWindowControl()
-        {
-            Dispose(false);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

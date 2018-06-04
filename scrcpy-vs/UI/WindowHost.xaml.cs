@@ -37,7 +37,7 @@ namespace scrcpy.VisualStudio.UI
         {
             if (_process == null) return;
 
-            if (!_process.HasExited) _process.Kill();
+            if (!_process.HasExited) _process.CloseMainWindow();
             _process = null;
         }
 
