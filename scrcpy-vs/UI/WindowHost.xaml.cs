@@ -37,7 +37,19 @@ namespace scrcpy.VisualStudio.UI
         {
             if (_process == null) return;
 
-            if (!_process.HasExited) _process.CloseMainWindow();
+            if (!_process.HasExited)
+            {
+                ProcessStartInfo killInfo = new ProcessStartInfo()
+                {
+                    FileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "taskkill.exe"),
+                    Arguments = $"/PID {_process.Id} /T /F",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                };
+                Process kill = Process.Start(killInfo);
+                kill.WaitForExit();
+            }
+
             _process = null;
         }
 
