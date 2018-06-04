@@ -61,8 +61,10 @@
         <TabControl
             x:Name="pageControl"
             Grid.Row="2"
+            Padding="0"
             Background="{x:Null}"
             BorderBrush="{x:Null}"
+            BorderThickness="0"
             SelectedIndex="0">
             <TabItem Visibility="Collapsed">
                 <TextBlock
@@ -74,7 +76,7 @@
                     TextWrapping="Wrap" />
             </TabItem>
             <TabItem Visibility="Collapsed">
-                <ui:WindowHost x:Name="windowHost" />
+                <ui:WindowHost x:Name="windowHost" Margin="0,-2,0,0" />
             </TabItem>
         </TabControl>
         <ProgressBar
