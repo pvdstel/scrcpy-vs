@@ -54,6 +54,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Android\Adb.cs" />
     <Compile Include="Native\Constants.cs" />
     <Compile Include="Native\Methods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
