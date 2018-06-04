@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 
-namespace scrcpy_vs.UI
+namespace scrcpy.VisualStudio.UI
 {
     /// <summary>
     /// Command handler

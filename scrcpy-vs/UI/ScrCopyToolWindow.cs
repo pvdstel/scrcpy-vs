@@ -1,4 +1,4 @@
-﻿namespace scrcpy_vs.UI
+﻿namespace scrcpy.VisualStudio.UI
 {
     using System;
     using System.Runtime.InteropServices;
@@ -23,7 +23,7 @@
         /// </summary>
         public ScrCopyToolWindow() : base(null)
         {
-            this.Caption = "ScrCopyToolWindow";
+            this.Caption = "scrcpy";
 
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on

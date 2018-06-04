@@ -1,4 +1,4 @@
-﻿namespace scrcpy_vs.UI
+﻿namespace scrcpy.VisualStudio.UI
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
