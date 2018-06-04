@@ -22,7 +22,7 @@
 
   <!--The Commands section is where commands, menus, and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
-  <Commands package="guidScrCopyToolWindowPackage">
+  <Commands package="guidScrcpyToolWindowPackage">
     <!-- Inside this section we have different sub-sections: one for the menus, another
     for the menu groups, one for the buttons (the actual commands), one for the combos
     and the last one for the bitmaps used. Each element is identified by a command id that
@@ -42,11 +42,11 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidScrCopyToolWindowPackageCmdSet" id="ScrCopyToolWindowCommandId" priority="0x0100" type="Button">
+      <Button guid="guidScrcpyToolWindowPackageCmdSet" id="ScrcpyToolWindowCommandId" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>ScrCopyToolWindow</ButtonText>
+          <ButtonText>scrcpy</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -58,20 +58,20 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidImages" href="Resources\ScrCopyToolWindowCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
+      <Bitmap guid="guidImages" href="Resources\ScrcpyToolWindowCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
     </Bitmaps>
   </Commands>
 
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidScrCopyToolWindowPackage" value="{b6b69753-6394-4902-aa4b-7eff2d84c54a}" />
+    <GuidSymbol name="guidScrcpyToolWindowPackage" value="{c672548b-255d-438c-91b9-b18acadfac63}" />
 
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidScrCopyToolWindowPackageCmdSet" value="{cc6c2d77-9999-41d5-ab4e-97d8b9d3b660}">
-      <IDSymbol name="ScrCopyToolWindowCommandId" value="0x0100" />
+    <GuidSymbol name="guidScrcpyToolWindowPackageCmdSet" value="{94db034e-bda6-45cc-8f5a-3f278c8068d8}">
+      <IDSymbol name="ScrcpyToolWindowCommandId" value="0x0100" />
     </GuidSymbol>
 
-    <GuidSymbol name="guidImages" value="{bc0d902b-5e49-4cd9-b815-cdfb91961c9e}" >
+    <GuidSymbol name="guidImages" value="{dde70bda-5cfb-4bfa-bfb9-887750e2e93f}" >
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

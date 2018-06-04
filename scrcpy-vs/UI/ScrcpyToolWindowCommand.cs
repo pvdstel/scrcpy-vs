@@ -12,7 +12,7 @@ namespace scrcpy.VisualStudio.UI
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class ScrCopyToolWindowCommand
+    internal sealed class ScrcpyToolWindowCommand
     {
         /// <summary>
         /// Command ID.
@@ -22,7 +22,7 @@ namespace scrcpy.VisualStudio.UI
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("cc6c2d77-9999-41d5-ab4e-97d8b9d3b660");
+        public static readonly Guid CommandSet = new Guid("94db034e-bda6-45cc-8f5a-3f278c8068d8");
 
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -30,12 +30,12 @@ namespace scrcpy.VisualStudio.UI
         private readonly AsyncPackage package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScrCopyToolWindowCommand"/> class.
+        /// Initializes a new instance of the <see cref="ScrcpyToolWindowCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private ScrCopyToolWindowCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private ScrcpyToolWindowCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -48,7 +48,7 @@ namespace scrcpy.VisualStudio.UI
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static ScrCopyToolWindowCommand Instance
+        public static ScrcpyToolWindowCommand Instance
         {
             get;
             private set;
@@ -71,12 +71,12 @@ namespace scrcpy.VisualStudio.UI
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Verify the current thread is the UI thread - the call to AddCommand in ScrCopyToolWindowCommand's constructor requires
+            // Verify the current thread is the UI thread - the call to AddCommand in ScrcpyToolWindowCommand's constructor requires
             // the UI thread.
             ThreadHelper.ThrowIfNotOnUIThread();
 
             OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
-            Instance = new ScrCopyToolWindowCommand(package, commandService);
+            Instance = new ScrcpyToolWindowCommand(package, commandService);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace scrcpy.VisualStudio.UI
             // Get the instance number 0 of this tool window. This window is single instance so this instance
             // is actually the only one.
             // The last flag is set to true so that if the tool window does not exists it will be created.
-            ToolWindowPane window = this.package.FindToolWindow(typeof(ScrCopyToolWindow), 0, true);
+            ToolWindowPane window = this.package.FindToolWindow(typeof(ScrcpyToolWindow), 0, true);
             if ((null == window) || (null == window.Frame))
             {
                 throw new NotSupportedException("Cannot create tool window");

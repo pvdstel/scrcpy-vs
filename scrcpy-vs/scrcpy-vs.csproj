@@ -57,15 +57,12 @@
     <Compile Include="Native\Constants.cs" />
     <Compile Include="Native\Methods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\ScrCopyToolWindow.cs" />
-    <Compile Include="UI\ScrCopyToolWindowCommand.cs" />
-    <Compile Include="UI\ScrCopyToolWindowControl.xaml.cs">
-      <DependentUpon>ScrCopyToolWindowControl.xaml</DependentUpon>
+    <Compile Include="UI\ScrcpyToolWindow.cs" />
+    <Compile Include="UI\ScrcpyToolWindowCommand.cs" />
+    <Compile Include="UI\ScrcpyToolWindowControl.xaml.cs">
+      <DependentUpon>ScrcpyToolWindowControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ScrCopyToolWindowPackage.cs" />
-    <Compile Include="UI\WindowHost.xaml.cs">
-      <DependentUpon>WindowHost.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="UI\ScrcpyToolWindowPackage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
@@ -166,20 +163,50 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\ScrCopyToolWindowControl.xaml">
+    <Content Include="scrcpy-win64\adb.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\AdbWinApi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\AdbWinUsbApi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\avcodec-58.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\avformat-58.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\avutil-56.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\scrcpy-noconsole.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\scrcpy-server.jar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\scrcpy.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\SDL2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scrcpy-win64\swresample-3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Resources\ScrcpyToolWindowCommand.png" />
+    <Content Include="UI\Resources\ScrcpyToolWindowPackage.ico" />
+    <VSCTCompile Include="UI\ScrcpyToolWindowPackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UI\ScrcpyToolWindowControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\WindowHost.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="UI\Resources\ScrCopyToolWindowCommand.png" />
-    <Content Include="UI\Resources\ScrCopyToolWindowPackage.ico" />
-    <VSCTCompile Include="UI\ScrCopyToolWindowPackage.vsct">
-      <ResourceName>Menus.ctmenu</ResourceName>
-    </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\VSPackage.resx">

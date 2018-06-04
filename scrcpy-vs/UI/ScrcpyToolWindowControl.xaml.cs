@@ -5,14 +5,14 @@
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaction logic for ScrCopyToolWindowControl.
+    /// Interaction logic for ScrcpyToolWindowControl.
     /// </summary>
-    public partial class ScrCopyToolWindowControl : UserControl
+    public partial class ScrcpyToolWindowControl : UserControl
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScrCopyToolWindowControl"/> class.
+        /// Initializes a new instance of the <see cref="ScrcpyToolWindowControl"/> class.
         /// </summary>
-        public ScrCopyToolWindowControl()
+        public ScrcpyToolWindowControl()
         {
             this.InitializeComponent();
         }
@@ -28,7 +28,7 @@
         {
             MessageBox.Show(
                 string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
-                "ScrCopyToolWindow");
+                "scrcpy");
         }
     }
 }
