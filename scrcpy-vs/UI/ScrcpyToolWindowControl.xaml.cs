@@ -1,6 +1,13 @@
 ﻿namespace scrcpy.VisualStudio.UI
 {
+    using scrcpy.VisualStudio.Android;
+    using scrcpy.VisualStudio.ViewModel;
+    using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -15,20 +22,12 @@
         public ScrcpyToolWindowControl()
         {
             this.InitializeComponent();
-        }
+            ScrcpyViewModel vm = new ScrcpyViewModel();
+            vm.ScrcpyStartRequested += (s, e) =>
+            {
 
-        /// <summary>
-        /// Handles click on the button by displaying a message box.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="e">The event args.</param>
-        [SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions", Justification = "Sample code")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Default event handler naming pattern")]
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(
-                string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
-                "scrcpy");
+            };
+            DataContext = vm;
         }
     }
 }
