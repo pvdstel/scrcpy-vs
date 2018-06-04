@@ -165,38 +165,49 @@
   <ItemGroup>
     <Content Include="scrcpy-win64\adb.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\AdbWinApi.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\AdbWinUsbApi.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\avcodec-58.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\avformat-58.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\avutil-56.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\scrcpy-noconsole.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\scrcpy-server.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\scrcpy.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\SDL2.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scrcpy-win64\swresample-3.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="UI\Resources\ScrcpyToolWindowCommand.png" />
+    <Content Include="UI\Resources\command.png" />
     <Content Include="UI\Resources\ScrcpyToolWindowPackage.ico" />
     <VSCTCompile Include="UI\ScrcpyToolWindowPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
