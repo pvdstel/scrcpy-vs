@@ -117,7 +117,14 @@ namespace scrcpy.VisualStudio.ViewModel
             ScrcpyStopRequested?.Invoke(this, new EventArgs());
         }
 
+        /// <summary>
+        /// Invoked when scrcpy is requested to be started.
+        /// </summary>
         public event EventHandler<ScrcpyEventArgs> ScrcpyStartRequested;
+
+        /// <summary>
+        /// Invoked when scrcpy is requested to be stopped.
+        /// </summary>
         public event EventHandler ScrcpyStopRequested;
     }
 }

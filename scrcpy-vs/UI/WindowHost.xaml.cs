@@ -26,6 +26,9 @@ namespace scrcpy.VisualStudio.UI
         private Process _process;
         private System.Windows.Forms.Control _host;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowHost"/> class.
+        /// </summary>
         public WindowHost()
         {
             InitializeComponent();
@@ -33,6 +36,9 @@ namespace scrcpy.VisualStudio.UI
             SizeChanged += (s, e) => PositionWindow();
         }
 
+        /// <summary>
+        /// Kills the hosted process and any spawned child processes.
+        /// </summary>
         public void CleanUp()
         {
             if (_process == null) return;
@@ -42,7 +48,7 @@ namespace scrcpy.VisualStudio.UI
                 ProcessStartInfo killInfo = new ProcessStartInfo()
                 {
                     FileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "taskkill.exe"),
-                    Arguments = $"/PID {_process.Id} /T /F",
+                    Arguments = $"/PID {_process.Id} /T /F", // tree and force
                     UseShellExecute = false,
                     CreateNoWindow = true,
                 };
@@ -53,6 +59,12 @@ namespace scrcpy.VisualStudio.UI
             _process = null;
         }
 
+        /// <summary>
+        /// Starts the child process using the given information,
+        /// and embeds the main window of the started process.
+        /// </summary>
+        /// <param name="info">The process start information.</param>
+        /// <returns>A <see cref="Task"/> instance that completes when the hosted process exits.</returns>
         public async Task<Task> StartProcess(ProcessStartInfo info)
         {
             CleanUp();
@@ -65,8 +77,12 @@ namespace scrcpy.VisualStudio.UI
             return Task.Run(() => _process.WaitForExit());
         }
 
+        /// <summary>
+        /// Steals the window from the desktop and embeds it.
+        /// </summary>
         private void StealWindow()
         {
+            // Create host surface
             _host = new System.Windows.Forms.Control();
             wfh.Child = _host;
             _host.Focus();
@@ -75,9 +91,11 @@ namespace scrcpy.VisualStudio.UI
             Methods.SetWindowLongPtr(new HandleRef(null, _process.MainWindowHandle), Constants.GWL_STYLE, new IntPtr(Constants.WS_VISIBLE));
 
             PositionWindow();
-            wfh.Focus();
         }
 
+        /// <summary>
+        /// Positions the hosted window appropriately.
+        /// </summary>
         private void PositionWindow()
         {
             if (_process == null || _process.HasExited) return;
@@ -85,8 +103,6 @@ namespace scrcpy.VisualStudio.UI
 
             Methods.MoveWindow(_process.MainWindowHandle, 0, 0, (int)ActualWidth, (int)ActualHeight, true);
         }
-
-        public event EventHandler ProcessExited;
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

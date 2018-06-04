@@ -17,6 +17,9 @@
     /// </summary>
     public partial class ScrcpyToolWindowControl : UserControl
     {
+        /// <summary>
+        /// A semaphore used to ensure that race conditions do not occur in the UI.
+        /// </summary>
         private SemaphoreSlim _pageSemaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>
@@ -32,6 +35,11 @@
             DataContext = vm;
         }
 
+        /// <summary>
+        /// Invoked when scrcpy is requested to be started.
+        /// </summary>
+        /// <param name="sender">The event generator.</param>
+        /// <param name="e">The event arguments.</param>
         private async void ScrcpyStartRequested(object sender, Model.ScrcpyEventArgs e)
         {
             scrcpyStarting.Visibility = Visibility.Visible;
