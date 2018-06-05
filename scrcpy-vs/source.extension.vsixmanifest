@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="scrcpy_vs.5bb31355-8516-4ab4-b404-8cdfa25d2b37" Version="0.2" Language="en-US" Publisher="Paul" />
+        <Identity Id="scrcpy-vs.dc2f8ff9-ed86-419d-8b82-5400c90cef8f" Version="0.2" Language="en-US" Publisher="Paul" />
         <DisplayName>scrcpy for Visual Studio</DisplayName>
         <Description xml:space="preserve">A scrcpy wrapper for Visual Studio. Mirror and control your Android device from within Visual Studio.</Description>
         <MoreInfo>https://github.com/pvdstel/scrcpy-vs</MoreInfo>
