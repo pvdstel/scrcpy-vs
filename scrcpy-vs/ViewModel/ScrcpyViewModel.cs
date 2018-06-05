@@ -17,14 +17,15 @@ namespace scrcpy.VisualStudio.ViewModel
         private ObservableCollection<Device> _devices;
         private Device _selectedDevice;
         private bool _isGettingDevices;
+        private bool _isStartingScrcpy;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public ScrcpyViewModel()
         {
-            StartScrcpyCommand = new RelayCommand<Device>(StartScrcpy);
-            StopScrcpyCommand = new RelayCommand(StopScrcpy);
+            StartScrcpyCommand = new RelayCommand<Device>(StartScrcpy, (d) => !IsStartingScrcpy);
+            StopScrcpyCommand = new RelayCommand(StopScrcpy, () => !IsStartingScrcpy);
             RefreshDevicesCommand = new RelayCommand(async () => await GetDevicesAsync(), () => !IsGettingDevices);
         }
 
@@ -65,6 +66,18 @@ namespace scrcpy.VisualStudio.ViewModel
                 _isGettingDevices = value;
                 RaisePropertyChanged(nameof(IsGettingDevices));
                 RefreshDevicesCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool IsStartingScrcpy
+        {
+            get => _isStartingScrcpy;
+            set
+            {
+                _isStartingScrcpy = value;
+                RaisePropertyChanged(nameof(IsStartingScrcpy));
+                StartScrcpyCommand.RaiseCanExecuteChanged();
+                StopScrcpyCommand.RaiseCanExecuteChanged();
             }
         }
 

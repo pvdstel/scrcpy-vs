@@ -49,12 +49,12 @@
         /// <param name="e">The event arguments.</param>
         private async void ScrcpyStartRequested(object sender, Model.ScrcpyEventArgs e)
         {
-            scrcpyStarting.Visibility = Visibility.Visible;
+            _viewModel.IsStartingScrcpy = true;
             Task processCompletionTask = await windowHost.StartProcess(e.ProcessStartInfo);
 
             await _pageSemaphore.WaitAsync();
             pageControl.SelectedIndex = 1;
-            scrcpyStarting.Visibility = Visibility.Collapsed;
+            _viewModel.IsStartingScrcpy = false;
 
             await processCompletionTask;
 

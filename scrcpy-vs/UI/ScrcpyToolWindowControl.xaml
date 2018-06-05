@@ -55,8 +55,7 @@
             VerticalAlignment="Bottom"
             Background="{x:Null}"
             BorderBrush="{x:Null}"
-            IsIndeterminate="True"
-            Visibility="{Binding IsGettingDevices, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            IsIndeterminate="{Binding IsGettingDevices}" />
         <Rectangle Grid.Row="1" Fill="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBorderKey}}" />
         <TabControl
             x:Name="pageControl"
@@ -87,7 +86,6 @@
             VerticalAlignment="Bottom"
             Background="{x:Null}"
             BorderBrush="{x:Null}"
-            IsIndeterminate="True"
-            Visibility="Collapsed" />
+            IsIndeterminate="{Binding IsStartingScrcpy}" />
     </Grid>
 </UserControl>
