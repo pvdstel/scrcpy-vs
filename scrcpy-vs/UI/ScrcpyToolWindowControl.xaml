@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:scrcpy.VisualStudio.Model"
     xmlns:ui="clr-namespace:scrcpy.VisualStudio.UI"
+    xmlns:v="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
     xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -13,7 +14,11 @@
     Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTextKey}}"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/scrcpy-vs;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -21,8 +26,11 @@
             <RowDefinition Height="1" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <WrapPanel Margin="10" Orientation="Horizontal">
-            <ComboBox ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}">
+        <WrapPanel Margin="5" Orientation="Horizontal">
+            <ComboBox
+                VerticalContentAlignment="Center"
+                ItemsSource="{Binding Devices}"
+                SelectedItem="{Binding SelectedDevice}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type model:Device}">
                         <TextBlock Text="{Binding Description}" />
@@ -31,31 +39,26 @@
             </ComboBox>
             <Button
                 Margin="10,0,0,0"
-                Padding="5,0"
                 Command="{Binding StartScrcpyCommand}"
                 CommandParameter="{Binding SelectedDevice}"
                 Content="▶"
+                FontSize="14"
                 ToolTip="Start scrcpy for the selected device" />
             <Button
                 Margin="10,0,0,0"
-                Padding="5,0"
                 Command="{Binding RefreshDevicesCommand}"
                 Content="↺"
-                FontSize="14"
+                FontFamily="Arial"
+                FontSize="17"
                 ToolTip="Refresh devices" />
             <Button
                 Margin="10,0,0,0"
-                Padding="5,0"
                 Command="{Binding StopScrcpyCommand}"
                 Content="■"
+                FontSize="14"
                 ToolTip="Stop scrcpy" />
         </WrapPanel>
-        <ProgressBar
-            Height="5"
-            VerticalAlignment="Bottom"
-            Background="{x:Null}"
-            BorderBrush="{x:Null}"
-            IsIndeterminate="{Binding IsGettingDevices}" />
+        <ProgressBar VerticalAlignment="Bottom" IsIndeterminate="{Binding IsGettingDevices}" />
         <Rectangle Grid.Row="1" Fill="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBorderKey}}" />
         <TabControl
             x:Name="pageControl"
@@ -80,12 +83,8 @@
             </TabItem>
         </TabControl>
         <ProgressBar
-            x:Name="scrcpyStarting"
             Grid.Row="2"
-            Height="5"
             VerticalAlignment="Bottom"
-            Background="{x:Null}"
-            BorderBrush="{x:Null}"
             IsIndeterminate="{Binding IsStartingScrcpy}" />
     </Grid>
 </UserControl>
