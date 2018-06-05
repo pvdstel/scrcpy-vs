@@ -53,6 +53,24 @@ namespace scrcpy.VisualStudio.Android
         }
 
         /// <summary>
+        /// Kills the ADB server.
+        /// </summary>
+        public static void KillServer()
+        {
+            ProcessStartInfo psi = new ProcessStartInfo()
+            {
+                WorkingDirectory = ToolingPaths.Root,
+                FileName = ToolingPaths.AdbPath,
+                Arguments = "kill-server",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+
+            Process adb = Process.Start(psi);
+            adb.WaitForExit();
+        }
+
+        /// <summary>
         /// Runs ADB with the specified arguments.
         /// </summary>
         /// <param name="arguments">The arguments to run against ADB.</param>

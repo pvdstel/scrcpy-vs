@@ -15,7 +15,7 @@
     /// <summary>
     /// Interaction logic for ScrcpyToolWindowControl.
     /// </summary>
-    public partial class ScrcpyToolWindowControl : UserControl
+    public partial class ScrcpyToolWindowControl : UserControl, IDisposable
     {
         /// <summary>
         /// A semaphore used to ensure that race conditions do not occur in the UI.
@@ -50,9 +50,10 @@
         private async void ScrcpyStartRequested(object sender, Model.ScrcpyEventArgs e)
         {
             _viewModel.IsStartingScrcpy = true;
-            Task processCompletionTask = await windowHost.StartProcess(e.ProcessStartInfo);
 
+            Task processCompletionTask = await windowHost.StartProcess(e.ProcessStartInfo);
             await _pageSemaphore.WaitAsync();
+
             pageControl.SelectedIndex = 1;
             _viewModel.IsStartingScrcpy = false;
 
@@ -70,5 +71,34 @@
                 await _viewModel.GetDevicesAsync();
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                }
+
+                AdbWrapper.KillServer();
+
+                disposedValue = true;
+            }
+        }
+
+        ~ScrcpyToolWindowControl()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
