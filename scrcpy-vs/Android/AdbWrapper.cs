@@ -63,8 +63,8 @@ namespace scrcpy.VisualStudio.Android
             {
                 ProcessStartInfo psi = new ProcessStartInfo()
                 {
-                    WorkingDirectory = Paths.ScrcpyPath,
-                    FileName = Paths.AdbName,
+                    WorkingDirectory = ToolingPaths.Root,
+                    FileName = ToolingPaths.AdbPath,
                     Arguments = arguments,
                     RedirectStandardOutput = true,
                     UseShellExecute = false,

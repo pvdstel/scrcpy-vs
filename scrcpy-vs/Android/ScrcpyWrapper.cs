@@ -21,8 +21,8 @@ namespace scrcpy.VisualStudio.Android
         {
             ProcessStartInfo psi = new ProcessStartInfo()
             {
-                WorkingDirectory = Paths.ScrcpyPath,
-                FileName = Paths.ScrcpyNoConsoleName,
+                WorkingDirectory = ToolingPaths.Root,
+                FileName = ToolingPaths.ScrcpyPath,
                 Arguments = $"-s {device}",
             };
             return psi;

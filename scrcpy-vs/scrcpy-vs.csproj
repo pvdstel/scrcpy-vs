@@ -55,7 +55,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Android\AdbWrapper.cs" />
-    <Compile Include="Android\Paths.cs" />
+    <Compile Include="Android\ToolingPaths.cs" />
     <Compile Include="Android\ScrcpyWrapper.cs" />
     <Compile Include="Model\Device.cs" />
     <Compile Include="Model\ScrcpyEventArgs.cs" />
