@@ -89,8 +89,8 @@ namespace scrcpy.VisualStudio.ViewModel
         public async void GetDevices()
         {
             IsGettingDevices = true;
-            var devicesTasks = (await AdbWrapper.GetAuthorizedDevices())
-                .Select(async s => new Device(s, $"{await AdbWrapper.GetDeviceManufacturer(s)} {await AdbWrapper.GetDeviceModel(s)}"))
+            var devicesTasks = (await AdbWrapper.GetAuthorizedDevicesAsync())
+                .Select(async s => new Device(s, $"{await AdbWrapper.GetDeviceManufacturerAsync(s)} {await AdbWrapper.GetDeviceModelAsync(s)}"))
                 .ToList();
             await Task.WhenAll(devicesTasks);
 

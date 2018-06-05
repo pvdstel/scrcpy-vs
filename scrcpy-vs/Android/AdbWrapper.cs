@@ -18,9 +18,9 @@ namespace scrcpy.VisualStudio.Android
         /// Gets connected and authorized devices.
         /// </summary>
         /// <returns>A list of device IDs.</returns>
-        public static async Task<List<string>> GetAuthorizedDevices()
+        public static async Task<List<string>> GetAuthorizedDevicesAsync()
         {
-            string output = await GetAdbOutput("devices");
+            string output = await GetAdbOutputAsync("devices");
 
             return output.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
                 .Skip(1)
@@ -35,9 +35,9 @@ namespace scrcpy.VisualStudio.Android
         /// </summary>
         /// <param name="device">The device ID.</param>
         /// <returns>The device manufacturer.</returns>
-        public static async Task<string> GetDeviceManufacturer(string device)
+        public static async Task<string> GetDeviceManufacturerAsync(string device)
         {
-            string output = await GetAdbOutput($"-s {device} shell getprop ro.product.manufacturer");
+            string output = await GetAdbOutputAsync($"-s {device} shell getprop ro.product.manufacturer");
             return output.Trim();
         }
 
@@ -46,9 +46,9 @@ namespace scrcpy.VisualStudio.Android
         /// </summary>
         /// <param name="device">The device ID.</param>
         /// <returns>The device model.</returns>
-        public async static Task<string> GetDeviceModel(string device)
+        public async static Task<string> GetDeviceModelAsync(string device)
         {
-            string output = await GetAdbOutput($"-s {device} shell getprop ro.product.model");
+            string output = await GetAdbOutputAsync($"-s {device} shell getprop ro.product.model");
             return output.Trim();
         }
 
@@ -57,7 +57,7 @@ namespace scrcpy.VisualStudio.Android
         /// </summary>
         /// <param name="arguments">The arguments to run against ADB.</param>
         /// <returns>The output of ADB.</returns>
-        private static Task<string> GetAdbOutput(string arguments)
+        private static Task<string> GetAdbOutputAsync(string arguments)
         {
             return Task.Run(async () =>
             {
