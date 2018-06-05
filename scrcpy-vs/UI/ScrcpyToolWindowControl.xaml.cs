@@ -23,16 +23,23 @@
         private SemaphoreSlim _pageSemaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>
+        /// The viewmodel.
+        /// </summary>
+        private ScrcpyViewModel _viewModel;
+
+        private bool _firstTimeLoad = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ScrcpyToolWindowControl"/> class.
         /// </summary>
         public ScrcpyToolWindowControl()
         {
-            this.InitializeComponent();
+            _viewModel = new ScrcpyViewModel();
+            _viewModel.ScrcpyStartRequested += ScrcpyStartRequested;
+            _viewModel.ScrcpyStopRequested += (s, e) => windowHost.CleanUp();
+            DataContext = _viewModel;
 
-            ScrcpyViewModel vm = new ScrcpyViewModel();
-            vm.ScrcpyStartRequested += ScrcpyStartRequested;
-            vm.ScrcpyStopRequested += (s, e) => windowHost.CleanUp();
-            DataContext = vm;
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -53,6 +60,15 @@
 
             pageControl.SelectedIndex = 0;
             _pageSemaphore.Release();
+        }
+
+        private async void pageControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_firstTimeLoad)
+            {
+                _firstTimeLoad = false;
+                await _viewModel.GetDevicesAsync();
+            }
         }
     }
 }

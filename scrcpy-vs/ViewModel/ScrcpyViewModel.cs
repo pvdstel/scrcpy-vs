@@ -23,10 +23,9 @@ namespace scrcpy.VisualStudio.ViewModel
         /// </summary>
         public ScrcpyViewModel()
         {
-            GetDevices();
             StartScrcpyCommand = new RelayCommand<Device>(StartScrcpy);
             StopScrcpyCommand = new RelayCommand(StopScrcpy);
-            RefreshDevicesCommand = new RelayCommand(GetDevices);
+            RefreshDevicesCommand = new RelayCommand(async () => await GetDevicesAsync(), () => !IsGettingDevices);
         }
 
         /// <summary>
@@ -65,6 +64,7 @@ namespace scrcpy.VisualStudio.ViewModel
             {
                 _isGettingDevices = value;
                 RaisePropertyChanged(nameof(IsGettingDevices));
+                RefreshDevicesCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -79,22 +79,22 @@ namespace scrcpy.VisualStudio.ViewModel
         public RelayCommand StopScrcpyCommand { get; }
 
         /// <summary>
-        /// Gets the command used to call <see cref="GetDevices"/>.
+        /// Gets the command used to call <see cref="GetDevicesAsync"/>.
         /// </summary>
         public RelayCommand RefreshDevicesCommand { get; }
 
         /// <summary>
         /// Gets the connected Android devices.
         /// </summary>
-        public async void GetDevices()
+        public async Task GetDevicesAsync()
         {
             IsGettingDevices = true;
             var devicesTasks = (await AdbWrapper.GetAuthorizedDevicesAsync())
                 .Select(async s => new Device(s, $"{await AdbWrapper.GetDeviceManufacturerAsync(s)} {await AdbWrapper.GetDeviceModelAsync(s)}"))
                 .ToList();
-            await Task.WhenAll(devicesTasks);
+            Device[] devices = await Task.WhenAll(devicesTasks);
 
-            Devices = new ObservableCollection<Device>(devicesTasks.Select(t => t.Result));
+            Devices = new ObservableCollection<Device>(devices);
             if (Devices.Count > 0) SelectedDevice = Devices.First();
             IsGettingDevices = false;
         }

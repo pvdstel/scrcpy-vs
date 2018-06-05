@@ -65,6 +65,7 @@
             Background="{x:Null}"
             BorderBrush="{x:Null}"
             BorderThickness="0"
+            Loaded="pageControl_Loaded"
             SelectedIndex="0">
             <TabItem Visibility="Collapsed">
                 <TextBlock
