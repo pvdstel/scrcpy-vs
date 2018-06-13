@@ -26,7 +26,8 @@ namespace scrcpy.VisualStudio.ViewModel
         {
             StartScrcpyCommand = new RelayCommand<Device>(StartScrcpy, (d) => !IsStartingScrcpy && SelectedDevice != null);
             StopScrcpyCommand = new RelayCommand(StopScrcpy, () => !IsStartingScrcpy);
-            RefreshDevicesCommand = new RelayCommand(async () => await GetDevicesAsync(), () => !IsGettingDevices);
+            async void executeRefreshDevices() => await GetDevicesAsync();
+            RefreshDevicesCommand = new RelayCommand(executeRefreshDevices, () => !IsGettingDevices);
         }
 
         /// <summary>

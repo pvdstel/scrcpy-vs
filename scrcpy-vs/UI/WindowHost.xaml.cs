@@ -65,7 +65,7 @@ namespace scrcpy.VisualStudio.UI
         /// </summary>
         /// <param name="info">The process start information.</param>
         /// <returns>A <see cref="Task"/> instance that completes when the hosted process exits.</returns>
-        public async Task<Task> StartProcess(ProcessStartInfo info)
+        public async Task<Task> StartProcessAsync(ProcessStartInfo info)
         {
             CleanUp();
 
