@@ -72,7 +72,7 @@ namespace scrcpy.VisualStudio.UI
             _process = Process.Start(info);
             await Task.Run(() => _process.WaitForInputIdle());
 
-            StealWindow();
+            if (!_process.HasExited) StealWindow();
 
             return Task.Run(() => _process.WaitForExit());
         }
