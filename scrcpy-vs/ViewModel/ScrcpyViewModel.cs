@@ -24,7 +24,7 @@ namespace scrcpy.VisualStudio.ViewModel
         /// </summary>
         public ScrcpyViewModel()
         {
-            StartScrcpyCommand = new RelayCommand<Device>(StartScrcpy, (d) => !IsStartingScrcpy);
+            StartScrcpyCommand = new RelayCommand<Device>(StartScrcpy, (d) => !IsStartingScrcpy && SelectedDevice != null);
             StopScrcpyCommand = new RelayCommand(StopScrcpy, () => !IsStartingScrcpy);
             RefreshDevicesCommand = new RelayCommand(async () => await GetDevicesAsync(), () => !IsGettingDevices);
         }
@@ -52,6 +52,7 @@ namespace scrcpy.VisualStudio.ViewModel
             {
                 _selectedDevice = value;
                 RaisePropertyChanged(nameof(SelectedDevice));
+                StartScrcpyCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -118,6 +119,7 @@ namespace scrcpy.VisualStudio.ViewModel
         /// <param name="device">The device to connect to.</param>
         public void StartScrcpy(Device device)
         {
+            if (device == null) return;
             ScrcpyStartRequested?.Invoke(this, new ScrcpyEventArgs(ScrcpyWrapper.GetStartInfo(device.ID)));
         }
 
