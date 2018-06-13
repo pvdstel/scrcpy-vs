@@ -5,10 +5,6 @@
     using scrcpy.VisualStudio.Native;
     using scrcpy.VisualStudio.ViewModel;
     using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
