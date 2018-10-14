@@ -16,6 +16,10 @@
         <Setter Property="Foreground" Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}" />
     </Style>
 
+    <Style TargetType="Path">
+        <Setter Property="Fill" Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}" />
+    </Style>
+
     <Style x:Key="VSButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
