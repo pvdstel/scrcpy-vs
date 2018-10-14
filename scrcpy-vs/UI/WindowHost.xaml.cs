@@ -30,7 +30,10 @@ namespace scrcpy.VisualStudio.UI
         /// </summary>
         public void CleanUp()
         {
-            if (_process == null) return;
+            if (_process == null)
+            {
+                return;
+            }
 
             if (!_process.HasExited)
             {
@@ -59,9 +62,16 @@ namespace scrcpy.VisualStudio.UI
             CleanUp();
 
             _process = Process.Start(info);
-            await Task.Run(() => _process.WaitForInputIdle());
 
-            if (!_process.HasExited) StealWindow();
+            while (!_process.HasExited && _process.MainWindowHandle == IntPtr.Zero)
+            {
+                await Task.Delay(1);
+            }
+
+            if (!_process.HasExited)
+            {
+                StealWindow();
+            }
 
             return Task.Run(() => _process.WaitForExit());
         }
@@ -87,8 +97,15 @@ namespace scrcpy.VisualStudio.UI
         /// </summary>
         private void PositionWindow()
         {
-            if (_process == null || _process.HasExited) return;
-            if (_host == null) return;
+            if (_process == null || _process.HasExited)
+            {
+                return;
+            }
+
+            if (_host == null)
+            {
+                return;
+            }
 
             Methods.MoveWindow(_process.MainWindowHandle, 0, 0, (int)ActualWidth, (int)ActualHeight, true);
         }
