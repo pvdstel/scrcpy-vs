@@ -16,12 +16,6 @@
         <Setter Property="Foreground" Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}" />
     </Style>
 
-    <Style TargetType="Button">
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Width" Value="26" />
-        <Setter Property="Height" Value="26" />
-    </Style>
-
     <Style x:Key="VSButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -67,6 +61,12 @@
                 <Setter Property="ForceCursor" Value="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBorderKey}}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style BasedOn="{StaticResource VSButton}" TargetType="Button">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="26" />
+        <Setter Property="Height" Value="26" />
     </Style>
 
 </ResourceDictionary>
