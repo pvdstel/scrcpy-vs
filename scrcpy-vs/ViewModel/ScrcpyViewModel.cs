@@ -6,6 +6,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace scrcpy.VisualStudio.ViewModel
 {
@@ -121,7 +122,11 @@ namespace scrcpy.VisualStudio.ViewModel
         public void StartScrcpy(Device device)
         {
             if (device == null) return;
-            ScrcpyStartRequested?.Invoke(this, new ScrcpyEventArgs(ScrcpyWrapper.GetStartInfo(device.ID)));
+
+            int largestSmallestScreenDimension = Screen.AllScreens.Select(s => Math.Min(s.Bounds.Width, s.Bounds.Height)).Max();
+            var launchInfo = ScrcpyWrapper.GetStartInfo(device.ID, largestSmallestScreenDimension);
+
+            ScrcpyStartRequested?.Invoke(this, new ScrcpyEventArgs(launchInfo));
         }
 
         /// <summary>
