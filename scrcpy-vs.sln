@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrcpy-vs", "scrcpy-vs\scrcpy-vs.csproj", "{28F1DDE5-CCDF-4121-B369-90519C757951}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrcpy-vs", "scrcpy-vs\scrcpy-vs.csproj", "{3B6D9C25-3629-4574-B459-945A05BB8A9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{28F1DDE5-CCDF-4121-B369-90519C757951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28F1DDE5-CCDF-4121-B369-90519C757951}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28F1DDE5-CCDF-4121-B369-90519C757951}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28F1DDE5-CCDF-4121-B369-90519C757951}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B6D9C25-3629-4574-B459-945A05BB8A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B6D9C25-3629-4574-B459-945A05BB8A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B6D9C25-3629-4574-B459-945A05BB8A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B6D9C25-3629-4574-B459-945A05BB8A9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D7324178-ED2C-40A2-A2CF-A8B30B08A4BC}
+		SolutionGuid = {24D73EE2-7B2B-40D6-B777-A6A6A21C0290}
 	EndGlobalSection
 EndGlobal

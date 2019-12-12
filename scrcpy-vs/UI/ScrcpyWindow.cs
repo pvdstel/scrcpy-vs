@@ -1,9 +1,9 @@
-﻿namespace scrcpy.VisualStudio.UI
-{
-    using System;
-    using System.Runtime.InteropServices;
-    using Microsoft.VisualStudio.Shell;
+﻿using System;
+using System.Runtime.InteropServices;
+using Microsoft.VisualStudio.Shell;
 
+namespace scrcpy.VisualStudio.UI
+{
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.
     /// </summary>
@@ -15,20 +15,20 @@
     /// implementation of the IVsUIElementPane interface.
     /// </para>
     /// </remarks>
-    [Guid("e4ebc168-7fd1-42b4-9c77-8340a86f8644")]
-    public class ScrcpyToolWindow : ToolWindowPane
+    [Guid("f3c9e782-7825-4f77-b696-a53218ca48ad")]
+    public class ScrcpyWindow : ToolWindowPane
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScrcpyToolWindow"/> class.
+        /// Initializes a new instance of the <see cref="ScrcpyWindow"/> class.
         /// </summary>
-        public ScrcpyToolWindow() : base(null)
+        public ScrcpyWindow() : base(null)
         {
             this.Caption = "scrcpy";
 
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
-            this.Content = new ScrcpyToolWindowControl();
+            this.Content = new ScrcpyWindowControl();
         }
     }
 }

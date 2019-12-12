@@ -12,7 +12,7 @@ namespace scrcpy.VisualStudio.UI
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class ScrcpyToolWindowCommand
+    internal sealed class ScrcpyWindowCommand
     {
         /// <summary>
         /// Command ID.
@@ -22,7 +22,7 @@ namespace scrcpy.VisualStudio.UI
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("94db034e-bda6-45cc-8f5a-3f278c8068d8");
+        public static readonly Guid CommandSet = new Guid("f72d56e5-b073-4fcc-9ae0-eb42776b3a3c");
 
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -30,12 +30,12 @@ namespace scrcpy.VisualStudio.UI
         private readonly AsyncPackage package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScrcpyToolWindowCommand"/> class.
+        /// Initializes a new instance of the <see cref="ScrcpyWindowCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private ScrcpyToolWindowCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private ScrcpyWindowCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -48,7 +48,7 @@ namespace scrcpy.VisualStudio.UI
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static ScrcpyToolWindowCommand Instance
+        public static ScrcpyWindowCommand Instance
         {
             get;
             private set;
@@ -71,12 +71,12 @@ namespace scrcpy.VisualStudio.UI
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Verify the current thread is the UI thread - the call to AddCommand in ScrcpyToolWindowCommand's constructor requires
+            // Switch to the main thread - the call to AddCommand in ScrcpyWindowCommand's constructor requires
             // the UI thread.
-            ThreadHelper.ThrowIfNotOnUIThread();
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
-            Instance = new ScrcpyToolWindowCommand(package, commandService);
+            Instance = new ScrcpyWindowCommand(package, commandService);
         }
 
         /// <summary>
@@ -86,19 +86,14 @@ namespace scrcpy.VisualStudio.UI
         /// <param name="e">The event args.</param>
         private void Execute(object sender, EventArgs e)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
-            // Get the instance number 0 of this tool window. This window is single instance so this instance
-            // is actually the only one.
-            // The last flag is set to true so that if the tool window does not exists it will be created.
-            ToolWindowPane window = this.package.FindToolWindow(typeof(ScrcpyToolWindow), 0, true);
-            if ((null == window) || (null == window.Frame))
+            this.package.JoinableTaskFactory.RunAsync(async delegate
             {
-                throw new NotSupportedException("Cannot create tool window");
-            }
-
-            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
-            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+                ToolWindowPane window = await this.package.ShowToolWindowAsync(typeof(ScrcpyWindow), 0, true, this.package.DisposalToken);
+                if ((null == window) || (null == window.Frame))
+                {
+                    throw new NotSupportedException("Cannot create tool window");
+                }
+            });
         }
     }
 }

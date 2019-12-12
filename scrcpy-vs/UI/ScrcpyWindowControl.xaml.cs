@@ -13,7 +13,7 @@
     /// <summary>
     /// Interaction logic for ScrcpyToolWindowControl.
     /// </summary>
-    public partial class ScrcpyToolWindowControl : UserControl, IDisposable
+    public partial class ScrcpyWindowControl : UserControl, IDisposable
     {
         /// <summary>
         /// The delay introduced before refreshing devices.
@@ -45,14 +45,14 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrcpyToolWindowControl"/> class.
         /// </summary>
-        public ScrcpyToolWindowControl()
+        public ScrcpyWindowControl()
         {
             _viewModel = new ScrcpyViewModel();
             _viewModel.ScrcpyStartRequested += ScrcpyStartRequested;
             _viewModel.ScrcpyStopRequested += (s, e) => windowHost.CleanUp();
             DataContext = _viewModel;
 
-            jtf = new JoinableTaskFactory(new JoinableTaskContext());
+            jtf = new JoinableTaskFactory(Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskContext);
             _deviceWatcher = new DeviceWatcher();
             async void deviceChangedHandler(object s, EventArgs e) => await DevicesChangedEventAsync();
             _deviceWatcher.DeviceChanged += deviceChangedHandler;
@@ -120,7 +120,7 @@
             }
         }
 
-        ~ScrcpyToolWindowControl()
+        ~ScrcpyWindowControl()
         {
             Dispose(false);
         }

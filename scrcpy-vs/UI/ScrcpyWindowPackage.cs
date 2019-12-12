@@ -35,26 +35,26 @@ namespace scrcpy.VisualStudio.UI
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideToolWindow(typeof(ScrcpyToolWindow))]
-    [Guid(ScrcpyToolWindowPackage.PackageGuidString)]
+    [ProvideToolWindow(typeof(ScrcpyWindow))]
+    [Guid(ScrcpyWindowPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class ScrcpyToolWindowPackage : AsyncPackage
+    public sealed class ScrcpyWindowPackage : AsyncPackage
     {
         /// <summary>
-        /// ScrcpyToolWindowPackage GUID string.
+        /// ScrcpyWindowPackage GUID string.
         /// </summary>
-        public const string PackageGuidString = "c672548b-255d-438c-91b9-b18acadfac63";
+        public const string PackageGuidString = "9e042473-074b-4938-a921-c3c1b8c6429d";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScrcpyToolWindow"/> class.
+        /// Initializes a new instance of the <see cref="ScrcpyWindowPackage"/> class.
         /// </summary>
-        public ScrcpyToolWindowPackage()
+        public ScrcpyWindowPackage()
         {
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but
             // not sited yet inside Visual Studio environment. The place to do all the other
             // initialization is the Initialize method.
-        } 
+        }
 
         #region Package Members
 
@@ -70,7 +70,28 @@ namespace scrcpy.VisualStudio.UI
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-            await ScrcpyToolWindowCommand.InitializeAsync(this);
+            await ScrcpyWindowCommand.InitializeAsync(this);
+        }
+
+        public override IVsAsyncToolWindowFactory GetAsyncToolWindowFactory(Guid toolWindowType)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            if (toolWindowType == typeof(ScrcpyWindow).GUID)
+            {
+                return this;
+            }
+
+            return base.GetAsyncToolWindowFactory(toolWindowType);
+        }
+
+        protected override string GetToolWindowTitle(Type toolWindowType, int id)
+        {
+            if (toolWindowType == typeof(ScrcpyWindow))
+            {
+                return "ScrcpyWindow loading";
+            }
+
+            return base.GetToolWindowTitle(toolWindowType, id);
         }
 
         #endregion
