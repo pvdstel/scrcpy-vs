@@ -31,6 +31,15 @@ namespace scrcpy.VisualStudio.Android
                 WorkingDirectory = ToolingPaths.Root,
                 FileName = ToolingPaths.ScrcpyPath,
                 Arguments = launchArgs.ToString(),
+
+                //https://stackoverflow.com/a/1369252/12443583
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+                ErrorDialog = false,
+                WindowStyle = ProcessWindowStyle.Hidden,
             };
             return psi;
         }

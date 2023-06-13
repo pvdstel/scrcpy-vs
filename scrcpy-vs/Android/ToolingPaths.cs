@@ -16,7 +16,7 @@ namespace scrcpy.VisualStudio.Android
         /// <summary>
         /// The name of the scrcpy executable.
         /// </summary>
-        private const string ScrcpyNoConsoleName = "scrcpy-noconsole.exe";
+        private const string ScrcpyNoConsoleName = "scrcpy.exe";
 
         /// <summary>
         /// The name of the directory containing android executables.

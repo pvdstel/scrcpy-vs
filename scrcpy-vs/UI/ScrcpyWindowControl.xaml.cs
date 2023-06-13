@@ -68,18 +68,21 @@
         /// <param name="e">The event arguments.</param>
         private async void ScrcpyStartRequested(object sender, Model.ScrcpyEventArgs e)
         {
-            _viewModel.IsStartingScrcpy = true;
+            try
+            {
+                _viewModel.IsStartingScrcpy = true;
 
-            Task processCompletionTask = await windowHost.StartProcessAsync(e.ProcessStartInfo);
-            await _pageSemaphore.WaitAsync();
+                Task processCompletionTask = await windowHost.StartProcessAsync(e.ProcessStartInfo);
+                await _pageSemaphore.WaitAsync();
 
-            pageControl.SelectedIndex = 1;
-            _viewModel.IsStartingScrcpy = false;
+                pageControl.SelectedIndex = 1;
+                _viewModel.IsStartingScrcpy = false;
 
-            await processCompletionTask;
+                await processCompletionTask;
 
-            pageControl.SelectedIndex = 0;
-            _pageSemaphore.Release();
+                pageControl.SelectedIndex = 0;
+                _pageSemaphore.Release();
+            }catch (Exception ex) { ex.ToString(); }
         }
 
         /// <summary>
